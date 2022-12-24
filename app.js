@@ -10,7 +10,7 @@ const Strategy = require('passport-local').Strategy;
 const session = require('express-session');
 const flash = require('connect-flash');
 const authUtils = require('./utils/auth');
-
+const hbs = require('hbs');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -57,6 +57,7 @@ passport.deserializeUser((id, done) => {
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -72,6 +73,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.loggedIn = req.isAuthenticated();
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
