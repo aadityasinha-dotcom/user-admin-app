@@ -17,7 +17,7 @@ var usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 var app = express();
 
-MongoClient.connect('mongodb://localhost', (err, client) => {
+MongoClient.connect('mongodb://127.0.0.1/testdb', (err, client) => {
   if (err) {
     throw err;
   }

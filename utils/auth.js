@@ -9,4 +9,4 @@ const hashpassword = (plainText) => {
     .digest('hex');
 }
 
-modules.exports = { hashpassword };
+module.exports = { hashpassword };
